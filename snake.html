@@ -8,15 +8,15 @@
     <title>Document</title>
     <style>
         .pole {
-            width: 23px;
-            height: 23px;
-            border: solid black 1px;
+            width: 50px;
+            height: 50px;
             float: left;
+            box-sizing: border-box;
         }
 
         #container {
-            width: 575px;
-            height: 575px;
+            width: 800px;
+            height: 800px;
             border: solid black 1px;
         }
     </style>
@@ -27,9 +27,9 @@
     <script>
         function init() {
             plansza = []
-            for (let i = 0; i < 23; i++) {
+            for (let i = 0; i < 16; i++) {
                 plansza[i] = []
-                for (let j = 0; j < 23; j++) {
+                for (let j = 0; j < 16; j++) {
                     plansza[i][j] = pole(i, j)
                     plansza[i][j].createDiv()
                 }
@@ -40,11 +40,12 @@
             sterowanie()
             interval = setInterval(klatka, 100)
             dropJedzonka()
+            waz = []
         }
         init()
         function pole(i, j) {
             let value = 0
-            if (i == 0 || i == 22 || j == 0 || j == 22) {
+            if (i == 0 || i == 15 || j == 0 || j == 15) {
                 value = -1
             }
             return {
@@ -58,7 +59,7 @@
                     div.classList.add("pole")
                     div.id = i + "_" + j
                     div.style.backgroundColor = "#008000"
-                    if (i == 0 || i == 22 || j == 0 || j == 22) {
+                    if (i == 0 || i == 15 || j == 0 || j == 15) {
                         div.style.backgroundColor = "#006000"
                     }
                     if (j == 0)
@@ -68,7 +69,7 @@
             }
         }
         function pojawWeza() {
-            plansza[11][11].value = 1
+            plansza[8][8].value = 1
         }
         function klatka() {
             let check = false
@@ -103,22 +104,32 @@
             }
             for (i in plansza) {
                 for (j in plansza[i]) {
-
+                    let div = document.getElementById(plansza[i][j].id)
                     if (plansza[i][j].value > dlugosc) {
                         plansza[i][j].value = 0
-                    }
-                    if (plansza[i][j].value > 0) {
-                        document.getElementById(plansza[i][j].id).style.backgroundColor = "red"
-                        plansza[i][j].value++
+                        waz.splice(0, 1);
                     }
                     if (plansza[i][j].value == 0) {
-                        document.getElementById(plansza[i][j].id).style.backgroundColor = "green"
+                        document.getElementById(plansza[i][j].id).style.backgroundColor = "#47a700"
+                        div.style.border = ""
+                    }
+                    //document.getElementById(plansza[i][j].id).innerHTML = (i % 2 + j % 2) % 2
+                    if ((i % 2 + j % 2) % 2 == 1) {
+                        document.getElementById(plansza[i][j].id).style.backgroundColor = "#50b000"
                     }
                     if (plansza[i][j].value == -2) {
-                        document.getElementById(plansza[i][j].id).style.backgroundColor = "yellow"
+                        document.getElementById(plansza[i][j].id).style.backgroundColor = "#ffff00"
+                        div.style.border = "solid #ddaa00 10px"
                     }
-                    //document.getElementById(plansza[i][j].id).innerHTML = plansza[i][j].value
-
+                    if (plansza[i][j].value > 0) {
+                        div.style.backgroundColor = "red"
+                        div.style.border = "solid #880000 10px"
+                        console.log(div)
+                        plansza[i][j].value++
+                    }
+                    if (plansza[i][j].value == -1) {
+                        document.getElementById(plansza[i][j].id).style.backgroundColor = "#006000"
+                    }
                 }
             }
         }
@@ -132,6 +143,7 @@
         }
         function sprawdzanie(i, j) {
             if (plansza[i][j].value == -1 || plansza[i][j].value > 0) {
+                console.log(waz)
                 alert("przegrałeś")
                 window.location.reload(true);
             }
@@ -139,10 +151,11 @@
                 dlugosc++
                 dropJedzonka()
             }
+            waz[waz.length + 1] = plansza[i][j]
         }
         function dropJedzonka() {
-            let i = Math.floor(Math.random() * 22) + 1
-            let j = Math.floor(Math.random() * 22) + 1
+            let i = Math.floor(Math.random() * 15) + 1
+            let j = Math.floor(Math.random() * 15) + 1
             if (plansza[i][j].value == 0) {
                 plansza[i][j].value = -2
                 document.getElementById(plansza[i][j].id).backgroundColor = "yellow"
