@@ -93,7 +93,7 @@
         <div id="container"></div>
     </div>
     <script>
-        //gameStart = true
+        gameStart = true
         function init() {
             document.getElementById("container").innerHTML = ""
             plansza = []
@@ -169,6 +169,7 @@
         function klatka() {
             moznaSkrecac = true
             let check = false
+            jadymy = true
             for (i in plansza) {
                 for (j in plansza[i]) {
                     if (plansza[i][j].value == 2 && check == false) {
@@ -194,75 +195,76 @@
                     }
                 }
             }
-            for (i in plansza) {
-                for (j in plansza[i]) {
-                    let div = document.getElementById(plansza[i][j].id)
-                    //div.innerHTML = plansza[i][j].value
-                    if (plansza[i][j].value > dlugosc) {
-                        plansza[i][j].value = 0
-                        if (first == true)
-                            first = false
-                        else
-                            waz.splice(0, 1);
-                    }
-                    if (plansza[i][j].value == 0) {
-                        document.getElementById(plansza[i][j].id).style.backgroundColor = "#47a700"
-                        div.style.border = ""
-                    }
-                    if ((i % 2 + j % 2) % 2 == 1) {
-                        document.getElementById(plansza[i][j].id).style.backgroundColor = "#50b000"
-                    }
-                    if (plansza[i][j].value == -2) {
-                        document.getElementById(plansza[i][j].id).style.backgroundColor = "#ff0000"
-                        div.style.border = "solid #880000 10px"
-                    }
-                    if (plansza[i][j].value > 0) {
-                        div.style.backgroundColor = "blue"
-                        plansza[i][j].value++
-                    }
-                    if (plansza[i][j].value == -1) {
-                        document.getElementById(plansza[i][j].id).style.backgroundColor = "#006000"
+            if (jadymy)
+                for (i in plansza) {
+                    for (j in plansza[i]) {
+                        let div = document.getElementById(plansza[i][j].id)
+                        //div.innerHTML = plansza[i][j].value
+                        if (plansza[i][j].value > dlugosc) {
+                            plansza[i][j].value = 0
+                            if (first == true)
+                                first = false
+                            else
+                                waz.splice(0, 1);
+                        }
+                        if (plansza[i][j].value <= 0) {
+                            document.getElementById(plansza[i][j].id).style.backgroundColor = "#47a700"
+                            div.style.border = ""
+                        }
+                        if ((i % 2 + j % 2) % 2 == 1) {
+                            document.getElementById(plansza[i][j].id).style.backgroundColor = "#50b000"
+                        }
+                        if (plansza[i][j].value == -2) {
+                            document.getElementById(plansza[i][j].id).style.backgroundColor = "#ff0000"
+                            div.style.border = "solid #880000 10px"
+                        }
+                        if (plansza[i][j].value > 0) {
+                            div.style.backgroundColor = "blue"
+                            plansza[i][j].value++
+                        }
+                        if (plansza[i][j].value == -1) {
+                            document.getElementById(plansza[i][j].id).style.backgroundColor = "#006000"
+                        }
                     }
                 }
-            }
-            for (n in waz) {
-                let kierunek = waz[n].kierunek
-                if (n >= 1) {
-                    document.getElementById(waz[n - 1].div.id).style.border = "solid #000088 10px"
-                    if (kierunek == 87)
-                        document.getElementById(waz[n - 1].div.id).style.borderTop = ""
-                    if (kierunek == 83)
-                        document.getElementById(waz[n - 1].div.id).style.borderBottom = ""
-                    if (kierunek == 65)
-                        document.getElementById(waz[n - 1].div.id).style.borderLeft = ""
-                    if (kierunek == 68)
-                        document.getElementById(waz[n - 1].div.id).style.borderRight = ""
-                    if (n != 1) {
-                        if (waz[n - 1].kierunek == 87)
-                            document.getElementById(waz[n - 1].div.id).style.borderBottom = ""
-                        if (waz[n - 1].kierunek == 83)
-                            document.getElementById(waz[n - 1].div.id).style.borderTop = ""
-                        if (waz[n - 1].kierunek == 65)
-                            document.getElementById(waz[n - 1].div.id).style.borderRight = ""
-                        if (waz[n - 1].kierunek == 68)
-                            document.getElementById(waz[n - 1].div.id).style.borderLeft = ""
-                    }
-                    if (n == waz.length - 1) {
-                        document.getElementById(waz[n].div.id).style.border = "solid #000088 10px"
-                        if (kierunek == 83)
-                            document.getElementById(waz[n].div.id).style.borderTop = ""
+            if (jadymy)
+                for (n in waz) {
+                    let kierunek = waz[n].kierunek
+                    if (n >= 1) {
+                        document.getElementById(waz[n - 1].div.id).style.border = "solid #000088 10px"
                         if (kierunek == 87)
-                            document.getElementById(waz[n].div.id).style.borderBottom = ""
-                        if (kierunek == 68)
-                            document.getElementById(waz[n].div.id).style.borderLeft = ""
+                            document.getElementById(waz[n - 1].div.id).style.borderTop = ""
+                        if (kierunek == 83)
+                            document.getElementById(waz[n - 1].div.id).style.borderBottom = ""
                         if (kierunek == 65)
-                            document.getElementById(waz[n].div.id).style.borderRight = ""
-                        //document.getElementById(waz[n].div.id).style.backgroundImage = "url('./img/head.png')"
+                            document.getElementById(waz[n - 1].div.id).style.borderLeft = ""
+                        if (kierunek == 68)
+                            document.getElementById(waz[n - 1].div.id).style.borderRight = ""
+                        if (n != 1) {
+                            if (waz[n - 1].kierunek == 87)
+                                document.getElementById(waz[n - 1].div.id).style.borderBottom = ""
+                            if (waz[n - 1].kierunek == 83)
+                                document.getElementById(waz[n - 1].div.id).style.borderTop = ""
+                            if (waz[n - 1].kierunek == 65)
+                                document.getElementById(waz[n - 1].div.id).style.borderRight = ""
+                            if (waz[n - 1].kierunek == 68)
+                                document.getElementById(waz[n - 1].div.id).style.borderLeft = ""
+                        }
+                        if (n == waz.length - 1) {
+                            document.getElementById(waz[n].div.id).style.border = "solid #000088 10px"
+                            if (kierunek == 83)
+                                document.getElementById(waz[n].div.id).style.borderTop = ""
+                            if (kierunek == 87)
+                                document.getElementById(waz[n].div.id).style.borderBottom = ""
+                            if (kierunek == 68)
+                                document.getElementById(waz[n].div.id).style.borderLeft = ""
+                            if (kierunek == 65)
+                                document.getElementById(waz[n].div.id).style.borderRight = ""
+                        }
+                    } else {
+                        document.getElementById(waz[n].div.id).style.border = "solid #000088 10px"
                     }
-                } else {
-                    document.getElementById(waz[n].div.id).style.border = "solid #000088 10px"
                 }
-            }
         }
         function sterowanie() {
             dlugosc = 1
@@ -288,12 +290,13 @@
         function sprawdzanie(i, j) {
             if (plansza[i][j].value == -1 || plansza[i][j].value > 0) {
                 clearInterval(interval);
-                //gameStart = false
+                gameStart = false
                 if (dlugosc - 1 >= record)
                     document.cookie = "record=" + (dlugosc - 1) + "; expires=Fri, 31 Dec 9999 23:59:59 GMT;secure"
                 alert("twój wynik to: " + (dlugosc - 1))
-                //init()
-                window.location.reload(true);
+                jadymy = false
+                init()
+                //window.location.reload(true);
             }
             if (plansza[i][j].value == -2) {
                 if (dlugosc - 1 == record)
